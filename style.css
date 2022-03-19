@@ -1,0 +1,15 @@
+.gameGrid {
+    height: 600px;
+    width: 600px;
+    display: grid;
+    gap: 5px;
+    grid-template-columns: repeat(10, 50px);
+    /* grid-template-rows: repeat(10, 50px); */
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    background-color: #96b0e3;
+    cursor: pointer;
+}
