@@ -14,7 +14,7 @@ class Game {
   createBoard = () => {
     const field = document.getElementById('field');
     const gameGrid = document.createElement('div');
-    gameGrid.className = 'gameGrid';
+    gameGrid.className = 'gameGrid col-8';
     gameGrid.id = 'board';
 
     for (let i = 0; i < boardSize; i++) {
@@ -34,15 +34,14 @@ class Game {
         const shipItem = new Ship({ boardSize: boardSize, shipLength: ship.length });
         do {
           locations = shipItem.generateShip();
+          allShips.push(
+            {
+              name: ship.name,
+              locations: locations,
+              hits: [...Array(ship.length)].map(item => item = 0),
+              isSunk: false
+            });
         } while (collision(locations));
-
-        allShips.push(
-          {
-            name: ship.name,
-            locations: locations,
-            hits: [...Array(ship.length)].map(item => item = 0),
-            isSunk: false
-          });
       });
       putShipsOnBoard();
     };
@@ -82,17 +81,19 @@ class Game {
 
   hit = () => {
     const cells = document.querySelectorAll('.cell');
+
     cells.forEach((cell) => {
       cell.addEventListener('click', (e) => {
         const cellCoordinate = e.target.id;
-        this.checkKick(cellCoordinate, cell, fieldMatrix);
-        attempts += 1;
-        console.log(`${hits}/${attempts}`);
-        this.checkResult();
+        if (e.target.classList.contains('missed') || e.target.classList.contains('crashed')) {
+          createLogs("ONCE AGAIN?")
+        } else {
+          attempts += 1;
+          this.checkKick(cellCoordinate, cell, fieldMatrix);
+          this.checkResult();
+        }
       })
     })
-    
-
   }
 
   checkSunk = (ship) => {
@@ -119,12 +120,12 @@ class Game {
           })
           const isSunk = this.checkSunk(s);
           isSunk ? s.isSunk = true : '';
-          isSunk ? createLogs('SUNKED') : createLogs('TRY MORE');
+          isSunk ? createLogs('SUNKED', attempts) : createLogs('TRY MORE', attempts);
         }
       })
 
     } else {
-      createLogs('MISSED')
+      createLogs('MISSED', attempts)
       item.classList.add('missed');
     }
   }

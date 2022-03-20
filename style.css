@@ -3,7 +3,6 @@
 }
 
 .gameGrid {
-    height: 600px;
     width: 600px;
     display: grid;
     gap: 5px;
@@ -12,8 +11,8 @@
 }
 
 .messages {
-    width: 500px;
-    height: 100vh;
+    overflow-y: scroll;
+    height: 60vh;
 }
 
 .cell {
@@ -29,4 +28,12 @@
 
 .missed {
     background-color: yellow;
+}
+
+@media (max-width: 1000px) {
+    .gameGrid {
+        width: 200px;
+        height: 200px;
+        grid-template-columns: repeat(10, 20px);
+    }
 }
