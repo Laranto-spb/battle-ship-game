@@ -1,6 +1,7 @@
 import Ship from "./ship.js";
 import SHIPS from "../data/startShips.js";
 import { createMatrix } from "./utils.js";
+import { createLogs } from "./createLogs.js";
 
 const boardSize = 10;
 const allShips = []
@@ -75,6 +76,7 @@ class Game {
     console.log(fieldMatrix);
     this.createBoard();
     this.hit();
+    createLogs();
     console.log(allShips);
   }
 
@@ -116,11 +118,13 @@ class Game {
             +location == coordinate ? s.hits[index] = 1 : 0;
           })
           const isSunk = this.checkSunk(s);
-          isSunk? s.isSunk = true : '';
+          isSunk ? s.isSunk = true : '';
+          isSunk ? createLogs('SUNKED') : createLogs('TRY MORE');
         }
       })
 
     } else {
+      createLogs('MISSED')
       item.classList.add('missed');
     }
   }
@@ -132,7 +136,7 @@ class Game {
     })
     console.log('SUMM', totalSunked);
     console.log(allShips)
-    totalSunked === 4 ? console.log('GAME IS OVER') : console.log('NOT NOW');
+    totalSunked === 4 ? createLogs(`GAME OVER, hits - ${hits}, attempts -  ${attempts}`) : '';
   }
 }
 
