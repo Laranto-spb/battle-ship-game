@@ -1,39 +1,39 @@
 .game-field {
-    display: flex;
+  display: flex;
 }
 
 .gameGrid {
-    width: 600px;
-    display: grid;
-    gap: 5px;
-    grid-template-columns: repeat(10, 50px);
-    /* grid-template-rows: repeat(10, 50px); */
+  width: 600px;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(10, 50px);
+  /* grid-template-rows: repeat(10, 50px); */
 }
 
 .messages {
-    overflow-y: scroll;
-    height: 60vh;
+  overflow-y: scroll;
+  height: 60vh;
 }
 
 .cell {
-    width: 100%;
-    height: 100%;
-    background-color: #96b0e3;
-    cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: #96b0e3;
+  cursor: pointer;
 }
 
 .crashed {
-    background-color: red;
+  background-color: red;
 }
 
 .missed {
-    background-color: yellow;
+  background-color: yellow;
 }
 
 @media (max-width: 1000px) {
-    .gameGrid {
-        width: 200px;
-        height: 200px;
-        grid-template-columns: repeat(10, 20px);
-    }
+  .gameGrid {
+    width: 200px;
+    height: 200px;
+    grid-template-columns: repeat(10, 20px);
+  }
 }
