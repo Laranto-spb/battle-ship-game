@@ -13,3 +13,11 @@
     background-color: #96b0e3;
     cursor: pointer;
 }
+
+.crashed {
+    background-color: red;
+}
+
+.missed {
+    background-color: yellow;
+}

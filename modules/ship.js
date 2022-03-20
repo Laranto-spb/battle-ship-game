@@ -31,6 +31,10 @@ class Ship {
         }
         return newShipLocations;
     }
+
+    isSunk = (hits) => {
+        console.log(hits)
+    }
 }
 
 export default Ship;
