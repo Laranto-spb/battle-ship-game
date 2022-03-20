@@ -1,19 +1,19 @@
 const SHIPS = [{
-    name: 'S1',
+    name: 1,
     length: 1,
     count: 4
 }, {
-    name: 'S2',
+    name: 2,
     length: 2,
     count: 3
 },
 {
-    name: 'S3',
-    length: 2,
+    name: 3,
+    length: 3,
     count: 2
 },
 {
-    name: 'S4',
+    name: 4,
     length: 4,
     count: 1
 }];
