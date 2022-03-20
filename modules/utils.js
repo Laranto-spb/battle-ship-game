@@ -1,5 +1,5 @@
 export const getRandom = (max) => {
-    return Math.ceil(Math.random() * max);
+    return Math.floor(Math.random() * max);
 }
 
 export const createMatrix = (size) => {

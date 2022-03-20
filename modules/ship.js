@@ -14,9 +14,9 @@ class Ship {
 
         if (direction === 1) {
             row = getRandom(this.boardSize);
-            col = getRandom(this.boardSize - this.shipLength + 1);
+            col = getRandom(this.boardSize - this.shipLength);
         } else {
-            row = getRandom(this.boardSize - this.shipLength + 1);
+            row = getRandom(this.boardSize - this.shipLength);
             col = getRandom(this.boardSize);
         }
 

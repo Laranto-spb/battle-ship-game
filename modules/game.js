@@ -28,20 +28,35 @@ class Game {
     field.append(gameGrid);
 
     const createShips = () => {
+      let locations;
       SHIPS.forEach((ship) => {
-        const shipItem = new Ship({ boardSize: boardSize, shipLength: ship.length })
+        const shipItem = new Ship({ boardSize: boardSize, shipLength: ship.length });
+        do {
+          locations = shipItem.generateShip();
+        } while (collision(locations));
+
         allShips.push(
           {
             name: ship.name,
-            locations: shipItem.generateShip(),
+            locations: locations,
             hits: [...Array(ship.length)].map(item => item = 0),
             isSunk: false
           });
       });
-      generateShipLocations();
+      putShipsOnBoard();
     };
 
-    function generateShipLocations() {
+    const collision = (locations) => {
+      allShips.forEach((ship) => {
+        locations.forEach((loc) => {
+          ship.locations.indexOf(loc) >= 0
+          return true;
+        })
+      })
+      return false;
+    }
+
+    function putShipsOnBoard() {
       for (let i = 0; i < allShips.length; i++) {
         for (let j = 0; j < allShips[i].locations.length; j++) {
           const shipName = allShips[i].name;
@@ -60,7 +75,7 @@ class Game {
     console.log(fieldMatrix);
     this.createBoard();
     this.hit();
-
+    console.log(allShips);
   }
 
   hit = () => {
@@ -117,7 +132,7 @@ class Game {
     })
     console.log('SUMM', totalSunked);
     console.log(allShips)
-    totalSunked === 4 ? console.log('GAME IS NOT OVER') : console.log('NOT NOW');
+    totalSunked === 4 ? console.log('GAME IS OVER') : console.log('NOT NOW');
   }
 }
 
