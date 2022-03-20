@@ -5,6 +5,8 @@ import { createMatrix } from "./utils.js";
 const boardSize = 10;
 const allShips = []
 const fieldMatrix = createMatrix(boardSize);
+let attempts = 0;
+let hits = 0;
 
 class Game {
 
@@ -32,7 +34,8 @@ class Game {
           {
             name: ship.name,
             locations: shipItem.generateShip(),
-            hits: [0, 0, 0]
+            hits: [...Array(ship.length)].map(item => item = 0),
+            isSunk: false
           });
       });
       generateShipLocations();
@@ -54,8 +57,10 @@ class Game {
 
   start = () => {
     console.log('Game started');
+    console.log(fieldMatrix);
     this.createBoard();
     this.hit();
+
   }
 
   hit = () => {
@@ -64,8 +69,22 @@ class Game {
       cell.addEventListener('click', (e) => {
         const cellCoordinate = e.target.id;
         this.checkKick(cellCoordinate, cell, fieldMatrix);
+        attempts += 1;
+        console.log(`${hits}/${attempts}`);
+        this.checkResult();
       })
     })
+    
+
+  }
+
+  checkSunk = (ship) => {
+    const hitSumm = ship.hits.reduce((prev, current) => prev + current);
+    if (hitSumm === ship.name) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   checkKick = (coordinate, item, matrix) => {
@@ -73,24 +92,32 @@ class Game {
     const col = coordinate[0];
 
     if (matrix[row][col]) {
-      console.log('HIT');
       item.classList.add('crashed');
       const shipName = matrix[row][col];
+      hits += 1;
       allShips.forEach(s => {
         if (s.name === shipName) {
-          console.log(s.locations);
-          console.log(coordinate)
+          s.locations.map((location, index) => {
+            +location == coordinate ? s.hits[index] = 1 : 0;
+          })
+          const isSunk = this.checkSunk(s);
+          isSunk? s.isSunk = true : '';
         }
       })
 
     } else {
-      console.log('MISS');
       item.classList.add('missed');
     }
   }
 
-  checkSunk = () => {
-
+  checkResult = () => {
+    let totalSunked = 0;
+    allShips.forEach((ship) => {
+      ship.isSunk ? totalSunked++ : '';
+    })
+    console.log('SUMM', totalSunked);
+    console.log(allShips)
+    totalSunked === 4 ? console.log('GAME IS NOT OVER') : console.log('NOT NOW');
   }
 }
 
