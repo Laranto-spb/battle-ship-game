@@ -10,4 +10,8 @@ Ships(qty):
 3-x - 1
 4-x - 1
 
+Ships can be splited.
+
+To fix: random ship location fails sometimes (see console log matrix).
+
 Made by Larisa Antokhina

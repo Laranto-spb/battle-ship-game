@@ -18,18 +18,22 @@
 .cell {
   width: 100%;
   height: 100%;
-  background-color: #96b0e3;
+  background-color: #0d6efd;
   cursor: pointer;
+  transition: 0.5s;
 }
 
 .crashed {
-  background-color: red;
+  background-color: #dc3545;
 }
 
 .missed {
-  background-color: yellow;
+  background-color: #ffc107;
 }
 
+.hidden {
+  display: none;
+}
 @media (max-width: 1000px) {
   .gameGrid {
     width: 200px;

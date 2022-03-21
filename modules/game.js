@@ -9,10 +9,11 @@ const fieldMatrix = createMatrix(boardSize);
 let attempts = 0;
 let hits = 0;
 
+const field = document.getElementById("field");
+const gameGrid = document.createElement("div");
+
 class Game {
   createBoard = () => {
-    const field = document.getElementById("field");
-    const gameGrid = document.createElement("div");
     gameGrid.className = "gameGrid col-8";
     gameGrid.id = "board";
 
@@ -50,8 +51,9 @@ class Game {
     const collision = (locations) => {
       allShips.forEach((ship) => {
         locations.forEach((loc) => {
-          ship.locations.indexOf(loc) >= 0;
-          return true;
+          if (ship.locations.indexOf(loc) >= 0) {
+            return true;
+          }
         });
       });
       return false;
@@ -77,14 +79,13 @@ class Game {
     this.createBoard();
     this.hit();
     createLogs();
-    console.log(allShips);
   };
 
   hit = () => {
     const cells = document.querySelectorAll(".cell");
 
     cells.forEach((cell) => {
-      cell.addEventListener("click", (e) => {
+      const checkHit = (e) => {
         const cellCoordinate = e.target.id;
         if (
           e.target.classList.contains("missed") ||
@@ -94,9 +95,13 @@ class Game {
         } else {
           attempts += 1;
           this.checkKick(cellCoordinate, cell, fieldMatrix);
-          this.checkResult();
+          const result = this.checkResult();
+          if (result) {
+            gameGrid.classList.add("hidden");
+          }
         }
-      });
+      };
+      cell.addEventListener("click", checkHit);
     });
   };
 
@@ -140,11 +145,12 @@ class Game {
     allShips.forEach((ship) => {
       ship.isSunk ? totalSunked++ : "";
     });
-    console.log("SUMM", totalSunked);
-    console.log(allShips);
-    totalSunked === 4
-      ? createLogs(`GAME OVER, hits - ${hits}, attempts -  ${attempts}`)
-      : "";
+    if (totalSunked === 4) {
+      createLogs(`GAME OVER, hits - ${hits}, attempts -  ${attempts}`);
+      return true;
+    } else {
+      return false;
+    }
   };
 }
 
